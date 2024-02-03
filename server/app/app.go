@@ -1,8 +1,12 @@
 package app
 
 import (
+	"fmt"
+	"log"
 	"net/http"
 	"os"
+
+	"github.com/joho/godotenv"
 
 	"github.com/gorilla/mux"
 )
@@ -18,15 +22,30 @@ type App struct {
 
 func RegisterAPIRoutes(r *mux.Router) {
 	r.HandleFunc("/login", healthHandler).Methods("GET")
-	r.HandleFunc("/signup", healthHandler).Methods("POST")
+	r.HandleFunc("/register", healthHandler).Methods("POST")
+
+}
+
+func init() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 }
 
 func (a *App) Start() error {
 	a.Router = mux.NewRouter()
 	RegisterAPIRoutes(a.Router)
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
+
+	fmt.Println("Starting server on port " + port)
+
 	server := &http.Server{
-		Addr:    ":" + os.Getenv("PORT"),
+		Addr:    ":" + port,
 		Handler: a.Router,
 	}
 
