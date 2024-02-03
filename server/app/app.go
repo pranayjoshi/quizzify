@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"github.com/pranayjoshi/quizify/quiz"
 
 	"github.com/gorilla/mux"
 )
@@ -23,7 +24,7 @@ type App struct {
 func RegisterAPIRoutes(r *mux.Router) {
 	r.HandleFunc("/login", healthHandler).Methods("GET")
 	r.HandleFunc("/register", healthHandler).Methods("POST")
-
+	r.HandleFunc("/quiz", quiz.CreateQuiz).Methods("GET")
 }
 
 func init() {
