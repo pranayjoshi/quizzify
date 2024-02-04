@@ -8,23 +8,28 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/pranayjoshi/quizify/quiz"
+	"github.com/pranayjoshi/quizify/user"
 
 	"github.com/gorilla/mux"
 )
 
-func healthHandler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("OK"))
-}
+// func healthHandler(w http.ResponseWriter, r *http.Request) {
+// 	w.WriteHeader(http.StatusOK)
+// 	w.Write([]byte("OK"))
+// }
 
 type App struct {
 	Router *mux.Router
 }
 
 func RegisterAPIRoutes(r *mux.Router) {
-	r.HandleFunc("/login", healthHandler).Methods("GET")
-	r.HandleFunc("/register", healthHandler).Methods("POST")
+	r.HandleFunc("/login", user.LoginUser).Methods("POST")
+	r.HandleFunc("/register", user.RegisterUser).Methods("POST")
 	r.HandleFunc("/quiz", quiz.CreateQuiz).Methods("GET")
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("OK"))
+	}).Methods("GET")
 }
 
 func init() {
@@ -50,5 +55,13 @@ func (a *App) Start() error {
 		Handler: a.Router,
 	}
 
-	return server.ListenAndServe()
+	err := server.ListenAndServe()
+	if err != nil {
+		if err == http.ErrServerClosed {
+			log.Printf("Server closed under request %v", err)
+		} else {
+			log.Printf("Server closed unexpect: %v", err)
+		}
+	}
+	return err
 }
