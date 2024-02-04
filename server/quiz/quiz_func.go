@@ -37,7 +37,7 @@ func GetQuiz(w http.ResponseWriter, r *http.Request) {
 }
 
 type Results struct {
-	Name        string `json:"Name"`
+	Name        string `json:"name"`
 	QuizName    string `json:"quiz_name"`
 	QuizID      string `json:"quiz_id"`
 	ScoredMarks int    `json:"scored_marks"`

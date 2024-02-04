@@ -3,14 +3,14 @@ import Navbar from "../Layout/navbar";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
-
-// const dummyData = Array.from({ length: 10 }, (_, i) => ({
-//   question: `Question ${i + 1}`,
-//   options: ["Option 1", "Option 2", "Option 3", "Option 4"],
-//   answer: "Option 1",
-// }));
+import { useSelector } from "react-redux";
 
 const QuizPage = () => {
+  const quiz_id = useParams();
+  console.log(quiz_id)
+
+  const name = useSelector((state) => state.name);
+  const token = useSelector((state) => state.token);
   const [marks, setMarks] = useState(0);
   const [answers, setAnswers] = useState({});
   
@@ -29,15 +29,39 @@ const QuizPage = () => {
 
   const handleSubmit = () => {
     let correctAnswers = 0;
-
+  
     questions.forEach((question, index) => {
       if (answers[index] === question.Answer) {
         correctAnswers++;
       }
     });
-
+  
     console.log(`Total correct answers: ${correctAnswers}`);
+  
+    // Prepare the results data
+    const results = {
+      name: name, // Replace with the actual user's name
+      quiz_name: token, // Replace with the actual quiz name
+      quiz_id: quiz_id.quiz_id, // Replace with the actual quiz ID
+      scored_marks: correctAnswers,
+      total_marks: totalMarks,
+      Author: name // Replace with the actual quiz author
+    };
+    console.log(results);
+  
+    // Send the results data to the server
+    fetch(`http://localhost:8082/post_results?quiz_id=${quiz_id.quiz_id}`, { // Replace with the actual server URL
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(results)
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
   };
+
   return (
     <div className="h-screen overflow-y-auto justify-center  bg-gray-900 text-white">
       <Navbar />
