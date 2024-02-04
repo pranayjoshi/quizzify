@@ -11,11 +11,8 @@ const HomePage = () => {
       <Navbar />
       <div className="h-full mx-auto w-8/12 flex flex-col content-center align-center justify-center">
         <h1 className="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500 text-center mt-8 mb-4">
-          Quizzy: Unleash Your Knowledge!
+          Quizify: Unleash Your Knowledge!
         </h1>
-        <p className="text-2xl text-white text-center">
-          Where learning meets fun.
-        </p>
       <div className="h-full mx-auto w-full flex flex-col content-center align-center justify-center">
         <div className="grid grid-cols-2 gap-8 h-full items-center justify-items-center px-8 py-4">
           <Link to="/create" className="flex items-center justify-center p-6 rounded shadow-md text-center h-64 w-full text-white text-white bg-gradient-to-r from-green-400 to-blue-500 opacity-60 opacity-100 hover:opacity-75">

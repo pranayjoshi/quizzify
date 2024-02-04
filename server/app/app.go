@@ -11,6 +11,7 @@ import (
 	"github.com/pranayjoshi/quizify/user"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 // func healthHandler(w http.ResponseWriter, r *http.Request) {
@@ -45,25 +46,22 @@ func (a *App) Start() error {
 	a.Router = mux.NewRouter()
 	RegisterAPIRoutes(a.Router)
 
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"}, // All origins
+		AllowedMethods:   []string{"GET", "HEAD", "POST", "PUT", "OPTIONS"},
+		AllowedHeaders:   []string{"*"}, // All headers
+		AllowCredentials: true,
+	})
+
+	handler := c.Handler(a.Router)
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		log.Fatal("$PORT must be set")
 	}
-
 	fmt.Println("Starting server on port " + port)
 
-	server := &http.Server{
-		Addr:    ":" + port,
-		Handler: a.Router,
-	}
+	log.Fatal(http.ListenAndServe(":"+port, handler))
 
-	err := server.ListenAndServe()
-	if err != nil {
-		if err == http.ErrServerClosed {
-			log.Printf("Server closed under request %v", err)
-		} else {
-			log.Printf("Server closed unexpect: %v", err)
-		}
-	}
-	return err
+	return nil
 }

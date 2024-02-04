@@ -7,6 +7,7 @@ import CreatePage from './pages/CreatePage'
 import CodeEnterPage from './pages/CodeEnterPage'
 import Quiz from './pages/quiz'
 import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
 
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
           <Route path="/my-quizes" ></Route>
           <Route path="/results" ></Route>
           <Route path="/login" element={<LoginPage/>} />
-          <Route path="/register" element></Route>
+          <Route path="/register" element={<RegisterPage/>}></Route>
 
           {/* <Route path="/about" component={About} /> */}
         </Routes>
