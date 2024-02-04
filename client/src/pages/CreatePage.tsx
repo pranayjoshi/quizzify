@@ -38,7 +38,7 @@ const CreatePage = () => {
     finally {
         setIsLoading(false); // Set loading to false when the request is finished
 
-        navigate(`/show_quiz_id${data.quiz_id}`); // Navigate to the show quiz page
+        navigate(`/show_quiz_id/${data.quiz_id}`); // Navigate to the show quiz page
       }
   };
   if (isLoading) {
