@@ -110,7 +110,7 @@ func (s *Store) GetByName(b string) (*User, error) {
 
 func (s *Store) GetByQuiz(b string) (*Quiz, error) {
 	bin := &Quiz{}
-	if err := s.NewRef("users/quiz/"+b).Get(context.Background(), bin); err != nil {
+	if err := s.NewRef("quiz/"+b).Get(context.Background(), bin); err != nil {
 		return nil, err
 	}
 	// if bin.ID == "" {
@@ -120,5 +120,5 @@ func (s *Store) GetByQuiz(b string) (*Quiz, error) {
 }
 
 func (s *Store) Update(b string, m map[string]interface{}) error {
-	return s.NewRef("users/"+b).Update(context.Background(), m)
+	return s.NewRef(b).Update(context.Background(), m)
 }

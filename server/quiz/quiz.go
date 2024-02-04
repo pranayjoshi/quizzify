@@ -93,7 +93,7 @@ func CreateQuiz(w http.ResponseWriter, r *http.Request) {
 	content = strings.ReplaceAll(content, "\n", "")
 	// jsonData, err := json.Marshal(content)
 
-	quiz := Quiz{
+	quiz := user.Quiz{
 		Content:  content,
 		Author:   response.Author,
 		QuizID:   RandomQuizIDGen(),
@@ -106,12 +106,12 @@ func CreateQuiz(w http.ResponseWriter, r *http.Request) {
 	quizMap := map[string]interface{}{
 		"content":   string(quiz.Content),
 		"author":    quiz.Author,
-		"quizID":    quiz.QuizID,
+		"quiz_id":   quiz.QuizID,
 		"name":      quiz.Name,
 		"quiz_name": quiz.QuizName,
 	}
 
-	erri := store.Update(response.Name+"/quiz/"+quiz.QuizID, quizMap)
+	erri := store.Update("users/"+response.Name+"/quiz/"+quiz.QuizID, quizMap)
 	_ = store.Update("/quiz/"+quiz.QuizID, quizMap)
 	if erri != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
