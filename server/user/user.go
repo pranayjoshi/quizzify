@@ -28,6 +28,13 @@ type UserLogin struct {
 	Name     string `json:"name"`
 	Password string `json:"password"`
 }
+type Quiz struct {
+	Content  string `json:"content"`
+	Author   string `json:"author"`
+	QuizID   string `json:"quiz_id"`
+	Name     string `json:"name"`
+	QuizName string `json:"quiz_name"`
+}
 
 // var client *mongo.Client
 
@@ -98,6 +105,17 @@ func (s *Store) GetByName(b string) (*User, error) {
 	if bin.Email == "" {
 		return nil, nil
 	}
+	return bin, nil
+}
+
+func (s *Store) GetByQuiz(b string) (*Quiz, error) {
+	bin := &Quiz{}
+	if err := s.NewRef("users/quiz/"+b).Get(context.Background(), bin); err != nil {
+		return nil, err
+	}
+	// if bin.ID == "" {
+	// 	return nil, nil
+	// }
 	return bin, nil
 }
 

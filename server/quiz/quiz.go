@@ -5,18 +5,33 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"math/rand"
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/franciscoescher/goopenai"
+	"github.com/pranayjoshi/quizify/user"
 )
 
 type QuizResponse struct {
-	Name   string `json:"Name"`
-	ID     string `json:"id"`
-	Prompt string `json:"prompt"`
-	Author string `json:"author"`
+	Name     string `json:"Name"`
+	ID       string `json:"id"`
+	Prompt   string `json:"prompt"`
+	Author   string `json:"author"`
+	QuizName string `json:"quiz_name"`
+}
+
+const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+func RandomQuizIDGen() string {
+	rand.Seed(time.Now().UnixNano())
+	b := make([]byte, 10) // Change 10 to any length you want
+	for i := range b {
+		b[i] = charset[rand.Intn(len(charset))]
+	}
+	return string(b)
 }
 
 func CreateQuiz(w http.ResponseWriter, r *http.Request) {
@@ -45,6 +60,7 @@ func CreateQuiz(w http.ResponseWriter, r *http.Request) {
 	apiKey := os.Getenv("CHATGPT_API_KEY")
 	organization := os.Getenv("CHATGPT_ORG_ID")
 	body, err := io.ReadAll(r.Body)
+	fmt.Println(body)
 	var response QuizResponse
 	err = json.Unmarshal(body, &response)
 	if err != nil {
@@ -60,7 +76,7 @@ func CreateQuiz(w http.ResponseWriter, r *http.Request) {
 		Messages: []goopenai.Message{
 			{
 				Role:    "user",
-				Content: "I followed along here to get a general understanding of the algorithm: https://www.techiedelight.com/binary-search/ Things I learned from this: First off, I completely forgot you had to re-evaluate variables even if the dependencies change. For example, although the startIndex and endIndex variables were changing over time dynamically, I had to re-evaluate midIndex to have the correct value. Remember to sort list in ascending order. Binary Search only works on ascending sorted lists. Note that if you have multiples of the same value (say an array of [1, 2, 5, 5]), the algorithm is not particular about which 5 it chooses if that’s your target. Wherever the midIndex lands, it will choose that. So in this example, the first instance of 5 will be chosen in the array (index 2). You can check this when running the code. I saw in the article you can reformat this to be recursive. That made sense to me so I didn’t do it. The scope was to understand how the algorithm worked. I still have to read about how this saves time but I think it intuitively makes sense compared to the linear approach. They explained that linearly, the worst case is that the value is at the end of the list. I can see why that would take a long time if the list was millions of items long." + "\ncreate 10 quiz quiz question based on this arctile in a JSON format, with the question, options and the answer in this format type Quiz struct, use  {Question  Option1  Option2   Option3  Option4 Answer }",
+				Content: response.Prompt + "\ncreate 10 quiz quiz question based on this arctile in a JSON format, with the question, options and the answer in this format type Quiz struct, use  {Question  Option1  Option2   Option3  Option4 Answer }. The answer must be the Option value not the option index.",
 			},
 		},
 		Temperature: 0.7,
@@ -75,11 +91,38 @@ func CreateQuiz(w http.ResponseWriter, r *http.Request) {
 	content := completions.Choices[0].Message.Content
 	content = strings.ReplaceAll(content, "/", "")
 	content = strings.ReplaceAll(content, "\n", "")
-	jsonData, err := json.Marshal(content)
-	if err != nil {
+	// jsonData, err := json.Marshal(content)
+
+	quiz := Quiz{
+		Content:  content,
+		Author:   response.Author,
+		QuizID:   RandomQuizIDGen(),
+		Name:     response.Name,
+		QuizName: response.QuizName,
+	}
+
+	store := user.NewStore()
+	fmt.Println(quiz.Author)
+	quizMap := map[string]interface{}{
+		"content":   string(quiz.Content),
+		"author":    quiz.Author,
+		"quizID":    quiz.QuizID,
+		"name":      quiz.Name,
+		"quiz_name": quiz.QuizName,
+	}
+
+	erri := store.Update(response.Name+"/quiz/"+quiz.QuizID, quizMap)
+	_ = store.Update("/quiz/"+quiz.QuizID, quizMap)
+	if erri != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(jsonData)
+	quizIDMap := map[string]string{"quiz_id": quiz.QuizID}
+	quizIDJSON, err := json.Marshal(quizIDMap)
+	if err != nil {
+		fmt.Println("Error marshalling JSON: %v", err)
+	}
+
+	w.Write(quizIDJSON)
 }
