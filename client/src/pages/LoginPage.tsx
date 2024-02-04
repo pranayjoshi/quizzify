@@ -7,6 +7,7 @@ export const LoginPage = () => {
   const [name, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     
@@ -21,8 +22,8 @@ export const LoginPage = () => {
         body: JSON.stringify(user),
       });
       var data = await response.json();
-      dispatch(setToken({data}))
-      console.log(useSelector((state: any) => state.token));
+        dispatch(setToken({ token: data.token, name: data.name}));
+      console.log(data);
 
       if (response.status === 200) {
         console.log(`Successfully logged in user: ${name}`);

@@ -49,7 +49,7 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]string{"token": u.Name})
+	json.NewEncoder(w).Encode(map[string]string{"token": u.Name, "name": u.Name})
 
 	fmt.Printf("Successfully logged in user: %v\n", u.Name)
 }

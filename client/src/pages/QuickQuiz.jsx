@@ -8,7 +8,7 @@ const dummyData = Array.from({ length: 10 }, (_, i) => ({
   answer: "Option 1",
 }));
 
-const Quiz = () => {
+const QuickQuiz = () => {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
@@ -61,4 +61,4 @@ const Quiz = () => {
   );
 };
 
-export default Quiz;
+export default QuickQuiz;

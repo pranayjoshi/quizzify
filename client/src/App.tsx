@@ -5,9 +5,10 @@ import viteLogo from '/vite.svg'
 import HomePage from './pages/HomePage'
 import CreatePage from './pages/CreatePage'
 import CodeEnterPage from './pages/CodeEnterPage'
-import Quiz from './pages/quiz'
+import Quiz from './pages/QuickQuiz'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import QuizPage from './pages/QuizPage'
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="/results" ></Route>
           <Route path="/login" element={<LoginPage/>} />
           <Route path="/register" element={<RegisterPage/>}></Route>
+          <Route path="quiz/:quiz_id" element={<QuizPage/>} ></Route>
 
           {/* <Route path="/about" component={About} /> */}
         </Routes>

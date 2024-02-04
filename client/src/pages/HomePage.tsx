@@ -1,10 +1,12 @@
-import React from "react";
+// import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../Layout/navbar";
+import { useSelector } from "react-redux";
 // import "../App.css";
 // import backgroundImage from '../assets/12.jpg'; // Update with the correct path
 
 const HomePage = () => {
+//    console.log( useSelector((state: any) => state.token))
   return (
     // <div className="h-screen" style={{ backgroundImage: url(${backgroundImage}), backgroundSize: 'cover' }}>
     <div className="h-screen bg-inherit">
