@@ -29,6 +29,7 @@ func RegisterAPIRoutes(r *mux.Router) {
 	r.HandleFunc("/create_quiz", quiz.CreateQuiz).Methods("POST")
 	r.HandleFunc("/get_quiz", quiz.GetQuiz).Methods("GET")
 	r.HandleFunc("/post_results", quiz.PostResults).Methods("POST")
+	r.HandleFunc("/get_results", user.GetResultsbyName).Methods("GET")
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("OK"))

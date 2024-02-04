@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Layout/navbar";
 import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import { useSelector } from "react-redux";
 
@@ -13,6 +13,7 @@ const QuizPage = () => {
   const token = useSelector((state) => state.token);
   const [marks, setMarks] = useState(0);
   const [answers, setAnswers] = useState({});
+  const navigate = useNavigate();
   
   const location = useLocation();
   var questions = location.state.content;
@@ -60,6 +61,7 @@ const QuizPage = () => {
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => console.error('Error:', error));
+    navigate("/");
   };
 
   return (

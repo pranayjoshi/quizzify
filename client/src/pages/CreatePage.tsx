@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import Navbar from "../Layout/navbar";
 import { useSelector } from "react-redux";
@@ -10,9 +10,13 @@ const CreatePage = () => {
   const author = useSelector((state: any) => state.token);
     const name = useSelector((state: any) => state.name);
   const [content, setContent] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const handleSubmit = async () => {
+    setIsLoading(true);
     const quiz = { content, name, author, quiz_name };
     console.log(quiz);
+    var data;
     try {
       const response = await fetch('http://localhost:8082/create_quiz', {
         method: 'POST',
@@ -21,7 +25,8 @@ const CreatePage = () => {
         },
         body: JSON.stringify(quiz),
       });
-
+      data = await response.json();
+      console.log(data);
       if (response.status === 200) {
         console.log(`Successfully created quiz: ${quiz_name}`);
       } else {
@@ -30,7 +35,15 @@ const CreatePage = () => {
     } catch (error) {
       console.error(error);
     }
+    finally {
+        setIsLoading(false); // Set loading to false when the request is finished
+
+        navigate(`/show_quiz_id${data.quiz_id}`); // Navigate to the show quiz page
+      }
   };
+  if (isLoading) {
+    return <div className="bg-inherit h-screen text-xl text-white">Loading...</div>; // Show loading spinner when isLoading is true
+  }
   return (
     <div className=" bg-inherit">
       <Navbar />

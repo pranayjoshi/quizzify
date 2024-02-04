@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Navbar from "../Layout/navbar";
+import { useNavigate } from "react-router-dom";
 interface User {
     name: string;
     email: string;
@@ -14,10 +15,12 @@ export const RegisterPage = () => {
       [e.target.name]: e.target.value,
     });
   };
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log(user);
+    
     try {
         const response = await fetch('http://localhost:8082/register', {
             method: 'POST',
@@ -36,7 +39,10 @@ export const RegisterPage = () => {
     } catch (error) {
       console.error(error);
     }
+    navigate("/login");
+    
   };
+  
   return (
     <div className="h-screen">
       <Navbar />

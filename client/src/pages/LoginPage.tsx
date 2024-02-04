@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setToken } from "../state";
 import Navbar from "../Layout/navbar";
+import { useNavigate } from 'react-router-dom';
+
 
 export const LoginPage = () => {
   const [name, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -33,6 +36,7 @@ export const LoginPage = () => {
     } catch (error) {
       console.error(error);
     }
+    navigate("/");
   };
 
   return (

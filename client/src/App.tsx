@@ -9,6 +9,7 @@ import Quiz from './pages/QuickQuiz'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import QuizPage from './pages/QuizPage'
+import ShowQuizIdPage from './pages/ShowQuizIdPage'
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/login" element={<LoginPage/>} />
           <Route path="/register" element={<RegisterPage/>}></Route>
           <Route path="quiz/:quiz_id" element={<QuizPage/>} ></Route>
+          <Route path="show_quiz_id/:quiz_id" element={<ShowQuizIdPage/>}></Route>
 
           {/* <Route path="/about" component={About} /> */}
         </Routes>

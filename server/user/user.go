@@ -99,6 +99,7 @@ func (s *Store) Delete(u *User) error {
 
 func (s *Store) GetByName(b string) (*User, error) {
 	bin := &User{}
+	fmt.Println("users/" + b)
 	if err := s.NewRef("users/"+b).Get(context.Background(), bin); err != nil {
 		return nil, err
 	}
@@ -110,6 +111,7 @@ func (s *Store) GetByName(b string) (*User, error) {
 
 func (s *Store) GetByQuiz(b string) (*Quiz, error) {
 	bin := &Quiz{}
+
 	if err := s.NewRef("quiz/"+b).Get(context.Background(), bin); err != nil {
 		return nil, err
 	}

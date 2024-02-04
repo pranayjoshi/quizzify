@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Layout/navbar";
 
+
 const CodeEnterPage = () => {
   const [quizCode, setQuizCode] = useState("");
   const navigate = useNavigate();

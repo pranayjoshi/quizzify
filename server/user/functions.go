@@ -53,3 +53,26 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Printf("Successfully logged in user: %v\n", u.Name)
 }
+
+func GetResultsbyName(w http.ResponseWriter, r *http.Request) {
+
+	name := r.URL.Query().Get("name")
+	if name == "" {
+		http.Error(w, "Missing name", http.StatusBadRequest)
+		return
+	}
+
+	store := NewStore()
+
+	results, err := store.GetByName(name + "/results")
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(results)
+
+	fmt.Printf("Successfully fetched results for user: %v\n", name)
+}

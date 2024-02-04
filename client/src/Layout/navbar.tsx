@@ -1,11 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  return (
-    <nav className="flex items-center justify-between p-2 px-6 bg-gray-950 border-b">
+  const token = useSelector((state:any) => state.token);
+
+return (
+  <nav className="flex items-center justify-between p-2 px-6 bg-gray-950 border-b">
       <Link
         to="/"
         className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500 text-2xl font-bold"
@@ -13,6 +16,8 @@ const Navbar = () => {
         Quizzify
       </Link>
       <div className="flex space-x-4">
+    {token && (
+      <>
         <button
           className="text-white bg-gradient-to-r from-green-400 to-blue-500 rounded-full px-6 py-4 opacity-80"
           onClick={() => navigate("/login")}
@@ -26,9 +31,14 @@ const Navbar = () => {
         >
           Sign Up
         </button>
-      </div>
+      </>
+    )}
+
+   
+  </div>
     </nav>
-  );
+  
+);
 };
 
 export default Navbar;
