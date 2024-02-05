@@ -72,7 +72,7 @@ export const LoginPage = () => {
                 <div>
                   <label
                     htmlFor="password"
-                    className="text-base font-medium text-gray-900 dark:text-gray-200"
+                    className="text-base font-medium text-gray-200"
                   >
                     {" "}
                     Password{" "}

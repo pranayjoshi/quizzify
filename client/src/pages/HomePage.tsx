@@ -29,8 +29,8 @@ const HomePage = () => {
           <Link to="/quick-quiz" className="flex items-center justify-center p-6 rounded shadow-md text-center h-64 w-full text-white bg-gradient-to-r from-green-400 to-blue-500 opacity-60 opacity-100 hover:opacity-75">
             <h2 className="text-2xl font-bold mb-2">Quick Quiz</h2>
           </Link>
-          <Link to="/notes" className="flex items-center justify-center p-6 rounded shadow-md text-center h-64 w-full text-white bg-gradient-to-r from-green-400 to-blue-500 opacity-60 opacity-100 hover:opacity-75">
-            <h2 className="text-2xl font-bold mb-2">My Quiz</h2>
+          <Link to="/my-quizes" className="flex items-center justify-center p-6 rounded shadow-md text-center h-64 w-full text-white bg-gradient-to-r from-green-400 to-blue-500 opacity-60 opacity-100 hover:opacity-75">
+            <h2 className="text-2xl font-bold mb-2">My Quizes</h2>
           </Link>
           <Link to="/results" className="flex items-center justify-center p-6 rounded shadow-md text-center h-64 w-full text-white bg-gradient-to-r from-green-400 to-blue-500 opacity-60 opacity-100 hover:opacity-75">
             <h2 className="text-2xl font-bold mb-2">Results</h2>

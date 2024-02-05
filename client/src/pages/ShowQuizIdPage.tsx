@@ -1,8 +1,9 @@
 import React from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
 const ShowQuizIdPage = () => {
   const { quiz_id } = useParams(); // Get the quiz_id parameter from the URL
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen flex items-center justify-center ">
@@ -12,7 +13,7 @@ const ShowQuizIdPage = () => {
           <code>{quiz_id}</code>
         </pre>
         <button
-          onClick={() => navigator.clipboard.writeText(quiz_id!)}
+          onClick={() => {navigator.clipboard.writeText(quiz_id!); navigate("/")}}
           className=" px-4 py-2 bg-white border lg:text-lg rounded-full text-white bg-gradient-to-r from-green-400 to-blue-500 focus:outline-none"
         >
           Copy
