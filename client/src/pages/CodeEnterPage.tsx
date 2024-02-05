@@ -11,13 +11,11 @@ const CodeEnterPage = () => {
       const response = await fetch(`http://localhost:8082/get_quiz?quiz_id=${quizCode}`);
       console.log(`http://localhost:8082/getQuiz?quiz_id=${quizCode}`);
   
-      if (response.status === 200) {
         const quiz = await response.json();
+        console.log(quiz);
         const content = JSON.parse(quiz.content);
+        console.log(content)
         navigate(`/quiz/${quizCode}`, { state: { content } });
-      } else {
-        console.error(`Error: ${response.status}`);
-      }
     } catch (error) {
       console.error(error);
     }
@@ -48,7 +46,7 @@ const CodeEnterPage = () => {
           </div>
           <div className="lg:h-8 h-4"></div>
           <hr/>
-          <button  className="mt-4 px-4 py-2 bg-white border  lg:text-lg rounded-full text-white bg-gradient-to-r from-green-400 to-blue-500 focus:outline-none">Back</button>
+          <button  className="mt-4 px-4 py-2 bg-white border  lg:text-lg rounded-full text-white bg-gradient-to-r from-green-400 to-blue-500 focus:outline-none" onClick={()=> navigate("/")}>Back</button>
         </div>
       </div>
     </div>

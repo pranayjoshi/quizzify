@@ -31,7 +31,7 @@ function App() {
           <Route path="quiz/:quiz_id" element={<QuizPage/>} ></Route>
           <Route path="show_quiz_id/:quiz_id" element={<ShowQuizIdPage/>}></Route>
 
-          {/* <Route path="/about" component={About} /> */}
+          <Route path="*" element={<h1 className='bg-white'>Not Found</h1>} />
         </Routes>
       </BrowserRouter>
     </div>

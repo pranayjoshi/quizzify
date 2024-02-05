@@ -18,7 +18,7 @@ import (
 type QuizResponse struct {
 	Name     string `json:"Name"`
 	ID       string `json:"id"`
-	Prompt   string `json:"prompt"`
+	Content  string `json:"content"`
 	Author   string `json:"author"`
 	QuizName string `json:"quiz_name"`
 }
@@ -67,7 +67,7 @@ func CreateQuiz(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	prompt := response.Prompt
+	prompt := response.Content
 	fmt.Println(prompt)
 	client := goopenai.NewClient(apiKey, organization)
 
@@ -76,7 +76,7 @@ func CreateQuiz(w http.ResponseWriter, r *http.Request) {
 		Messages: []goopenai.Message{
 			{
 				Role:    "user",
-				Content: response.Prompt + "\ncreate 10 quiz quiz question based on this arctile in a JSON format, with the question, options and the answer in this format type Quiz struct, use  {Question  Option1  Option2   Option3  Option4 Answer }. The answer must be the Option value not the option index.",
+				Content: response.Content + "\ncreate 10 quiz quiz question based on the text before in a JSON format, with the question, options and the answer in this format type Quiz struct, use  {Question  Option1  Option2   Option3  Option4 Answer }. The answer must be the Option value not the option index.",
 			},
 		},
 		Temperature: 0.7,

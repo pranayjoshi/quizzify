@@ -49,7 +49,7 @@ export const RegisterPage = () => {
       <div className="flex items-center justify-center h-full">
         <div className="flex items-center justify-center px-4 py-10 sm:px-6 lg:px-8 sm:py-16 lg:py-24 border border-gray-300 rounded-md bg-gray-800 m-auto">
           <div className="xl:w-full xl:max-w-sm 2xl:max-w-md xl:mx-auto ">
-            <h2 className="text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl">
+            <h2 className="text-3xl font-bold leading-tight text-white sm:text-4xl">
               Register
             </h2>
 

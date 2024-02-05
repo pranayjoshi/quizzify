@@ -18,7 +18,8 @@ const QuizPage = () => {
   const location = useLocation();
   var questions = location.state.content;
   
-  questions = questions.Quiz
+  questions = questions[Object.keys(questions)[0]];
+  console.log(questions)
   const totalMarks = questions.length;
 
   const handleAnswerChange = (questionIndex, selectedOption) => {

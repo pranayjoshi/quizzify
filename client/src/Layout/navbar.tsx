@@ -16,7 +16,6 @@ return (
         Quizzify
       </Link>
       <div className="flex space-x-4">
-    {token && (
       <>
         <button
           className="text-white bg-gradient-to-r from-green-400 to-blue-500 rounded-full px-6 py-4 opacity-80"
@@ -32,7 +31,6 @@ return (
           Sign Up
         </button>
       </>
-    )}
 
    
   </div>
