@@ -1,2 +1,2 @@
 # quizify
-The smart Quest App
+The smart Quest App made by Team Quizzify
